@@ -59,8 +59,19 @@ enum JSONFormatter {
     static func parseObjectOrArray(_ text: String) -> Any? {
         let trimmed = text.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { return nil }
-        guard !containsTrailingComma(trimmed) else { return nil }
-        guard let data = trimmed.data(using: .utf8) else { return nil }
+        if let object = parseStrictObjectOrArray(trimmed) {
+            return object
+        }
+        // Chat UIs often soft-wrap long lines and insert real newlines inside
+        // string literals (e.g. "MacBook\nPro"), which is invalid JSON.
+        let repaired = repairSoftWrappedStringLiterals(trimmed)
+        guard repaired != trimmed else { return nil }
+        return parseStrictObjectOrArray(repaired)
+    }
+
+    private static func parseStrictObjectOrArray(_ text: String) -> Any? {
+        guard !containsTrailingComma(text) else { return nil }
+        guard let data = text.data(using: .utf8) else { return nil }
         guard let object = try? JSONSerialization.jsonObject(with: data, options: []) else {
             return nil
         }
@@ -69,6 +80,68 @@ enum JSONFormatter {
             return object
         }
         return nil
+    }
+
+    /// Replaces unescaped line breaks (and following wrap-indent) inside JSON
+    /// string literals with a single space so soft-wrapped clipboard text can parse.
+    static func repairSoftWrappedStringLiterals(_ text: String) -> String {
+        var result = String()
+        result.reserveCapacity(text.utf8.count)
+        var inString = false
+        var escaped = false
+        let chars = Array(text)
+        var i = 0
+        while i < chars.count {
+            let ch = chars[i]
+            if inString {
+                if escaped {
+                    result.append(ch)
+                    escaped = false
+                    i += 1
+                    continue
+                }
+                if ch == "\\" {
+                    result.append(ch)
+                    escaped = true
+                    i += 1
+                    continue
+                }
+                if ch == "\"" {
+                    result.append(ch)
+                    inString = false
+                    i += 1
+                    continue
+                }
+                if ch == "\r" || ch == "\n" {
+                    if ch == "\r", i + 1 < chars.count, chars[i + 1] == "\n" {
+                        i += 1
+                    }
+                    i += 1
+                    while i < chars.count, chars[i] == " " || chars[i] == "\t" {
+                        i += 1
+                    }
+                    if result.last?.isWhitespace != true {
+                        result.append(" ")
+                    }
+                    continue
+                }
+                // Other unescaped controls are illegal in JSON strings; drop them.
+                if let scalar = ch.unicodeScalars.first, scalar.value < 0x20 {
+                    i += 1
+                    continue
+                }
+                result.append(ch)
+                i += 1
+                continue
+            }
+
+            if ch == "\"" {
+                inString = true
+            }
+            result.append(ch)
+            i += 1
+        }
+        return result
     }
 
     /// JSONSerialization on Apple platforms may accept trailing commas; reject them for strict JSON.

@@ -160,6 +160,33 @@ final class JSONExtractorTests: XCTestCase {
         )
     }
 
+    func testSoftWrappedNewlineInsideStringLiteral() {
+        // Chat soft-wrap often splits mid-value: "MacBook" + newline + "Pro"
+        let input = "{\"device\":\"MacBook\nPro\",\"city\":\"Amsterdam\"}"
+        let result = JSONExtractor.process(input)
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertTrue(result.success?.formattedJSON.contains("MacBook Pro") == true)
+    }
+
+    func testSoftWrappedNewlineWithIndentInsideStringLiteral() {
+        let input = "{\"device\":\"MacBook\n  Pro\"}"
+        let result = JSONExtractor.process(input)
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertTrue(result.success?.formattedJSON.contains("MacBook Pro") == true)
+    }
+
+    func testPrettyPrintedJSONStillParses() {
+        let input = """
+        {
+          "device": "MacBook Pro",
+          "city": "Amsterdam"
+        }
+        """
+        let result = JSONExtractor.process(input)
+        XCTAssertTrue(result.isSuccess)
+        XCTAssertTrue(result.success?.formattedJSON.contains("MacBook Pro") == true)
+    }
+
     func testIncompleteJSON() {
         let result = JSONExtractor.process(#"{"name":"Alice""#)
         XCTAssertFalse(result.isSuccess)
