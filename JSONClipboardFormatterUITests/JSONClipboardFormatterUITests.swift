@@ -1,7 +1,7 @@
 import XCTest
 
 /// Basic UI smoke tests. Status-item apps are limited under XCTest.
-final class JSONClipboardFormatterUITests: XCTestCase {
+final class BracePasteUITests: XCTestCase {
     var app: XCUIApplication!
 
     override func setUpWithError() throws {

@@ -25,17 +25,17 @@ targets:
         buildPhase: none
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.vishalnarkhede.JSONClipboardFormatter
-        PRODUCT_NAME: JSON Clipboard Formatter
-        PRODUCT_MODULE_NAME: JSONClipboardFormatter
+        PRODUCT_BUNDLE_IDENTIFIER: com.vishalnarkhede.BracePaste
+        PRODUCT_NAME: BracePaste
+        PRODUCT_MODULE_NAME: BracePaste
         INFOPLIST_FILE: JSONClipboardFormatter/Resources/Info.plist
         CODE_SIGN_ENTITLEMENTS: JSONClipboardFormatter/JSONClipboardFormatter.entitlements
         LD_RUNPATH_SEARCH_PATHS: "@executable_path/../Frameworks"
         COMBINE_HIDPI_IMAGES: YES
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         GENERATE_INFOPLIST_FILE: NO
-        MARKETING_VERSION: "1.0.1"
-        CURRENT_PROJECT_VERSION: "2"
+        MARKETING_VERSION: "1.1.0"
+        CURRENT_PROJECT_VERSION: "3"
     entitlements:
       path: JSONClipboardFormatter/JSONClipboardFormatter.entitlements
   JSONClipboardFormatterTests:
@@ -47,9 +47,9 @@ targets:
       - target: JSONClipboardFormatter
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.vishalnarkhede.JSONClipboardFormatterTests
+        PRODUCT_BUNDLE_IDENTIFIER: com.vishalnarkhede.BracePasteTests
         GENERATE_INFOPLIST_FILE: YES
-        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/JSON Clipboard Formatter.app/Contents/MacOS/JSON Clipboard Formatter"
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/BracePaste.app/Contents/MacOS/BracePaste"
         BUNDLE_LOADER: "$(TEST_HOST)"
   JSONClipboardFormatterUITests:
     type: bundle.ui-testing
@@ -60,7 +60,7 @@ targets:
       - target: JSONClipboardFormatter
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.vishalnarkhede.JSONClipboardFormatterUITests
+        PRODUCT_BUNDLE_IDENTIFIER: com.vishalnarkhede.BracePasteUITests
         GENERATE_INFOPLIST_FILE: YES
         TEST_TARGET_NAME: JSONClipboardFormatter
 schemes:

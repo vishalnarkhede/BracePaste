@@ -12,9 +12,9 @@ final class MenuBarController: NSObject {
         super.init()
 
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "curlybraces", accessibilityDescription: "JSON Clipboard Formatter")
+            button.image = NSImage(systemSymbolName: "curlybraces", accessibilityDescription: "BracePaste")
             button.image?.isTemplate = true
-            button.setAccessibilityTitle("JSON Clipboard Formatter")
+            button.setAccessibilityTitle("BracePaste")
         }
 
         rebuildMenu()
@@ -122,7 +122,7 @@ final class MenuBarController: NSObject {
         menu.addItem(settingsItem)
 
         let aboutItem = NSMenuItem(
-            title: "About JSON Clipboard Formatter",
+            title: "About BracePaste",
             action: #selector(AppController.openAbout),
             keyEquivalent: ""
         )
@@ -132,7 +132,7 @@ final class MenuBarController: NSObject {
         menu.addItem(.separator())
 
         let quitItem = NSMenuItem(
-            title: "Quit JSON Clipboard Formatter",
+            title: "Quit BracePaste",
             action: #selector(NSApplication.terminate(_:)),
             keyEquivalent: "q"
         )
@@ -149,6 +149,6 @@ extension Notification.Name {
 /// Optional SwiftUI menu content for future use / previews.
 struct MenuBarView: View {
     var body: some View {
-        Text("JSON Clipboard Formatter")
+        Text("BracePaste")
     }
 }

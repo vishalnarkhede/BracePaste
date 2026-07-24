@@ -168,9 +168,9 @@ final class AppController: NSObject {
 
     @objc func openAbout() {
         let view = VStack(alignment: .leading, spacing: 12) {
-            Text("JSON Clipboard Formatter")
+            Text("BracePaste")
                 .font(.title2.bold())
-            Text("Version 1.0.0")
+            Text("Version 1.1.0")
                 .foregroundStyle(.secondary)
             Text("Formats JSON from your clipboard using a double Command+C gesture. All processing is local.")
                 .fixedSize(horizontal: false, vertical: true)
@@ -183,7 +183,7 @@ final class AppController: NSObject {
 
         let hosting = NSHostingController(rootView: view)
         let window = NSWindow(contentViewController: hosting)
-        window.title = "About JSON Clipboard Formatter"
+        window.title = "About BracePaste"
         window.styleMask = [.titled, .closable]
         window.center()
         aboutWindow = window
@@ -394,7 +394,7 @@ final class AppController: NSObject {
 
     private func presentError(_ message: String) {
         let alert = NSAlert()
-        alert.messageText = "JSON Clipboard Formatter"
+        alert.messageText = "BracePaste"
         alert.informativeText = message
         alert.alertStyle = .informational
         alert.runModal()

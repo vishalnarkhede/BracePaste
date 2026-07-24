@@ -7,7 +7,7 @@ struct OnboardingView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Welcome to JSON Clipboard Formatter")
+            Text("Welcome to BracePaste")
                 .font(.title2.bold())
                 .accessibilityAddTraits(.isHeader)
 

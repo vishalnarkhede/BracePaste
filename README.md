@@ -1,4 +1,4 @@
-# JSON Clipboard Formatter
+# BracePaste
 
 Native macOS menu bar app that formats JSON from your clipboard with a double **⌘C** gesture.
 
@@ -6,8 +6,8 @@ All processing is local. No network. No clipboard history.
 
 ## Install (DMG)
 
-1. Download the latest **`.dmg`** from [Releases](https://github.com/vishalnarkhede/JSONClipboardFormatter/releases).
-2. Open the DMG and drag **JSON Clipboard Formatter** into **Applications**.
+1. Download the latest **`.dmg`** from [Releases](https://github.com/vishalnarkhede/BracePaste/releases).
+2. Open the DMG and drag **BracePaste** into **Applications**.
 3. Launch it from Applications (or Spotlight).
 4. Grant **Accessibility** when prompted (required for double-⌘C detection).
 
@@ -39,12 +39,12 @@ You can also use **Format Clipboard** from the `{ }` menu bar icon.
 
 ```bash
 brew install xcodegen   # if needed
-cd JSONClipboardFormatter
+cd BracePaste   # or JSONClipboardFormatter clone folder
 xcodegen generate
 xcodebuild -scheme JSONClipboardFormatter -configuration Release -destination 'platform=macOS' build
 ```
 
-Or open `JSONClipboardFormatter.xcodeproj` in Xcode.
+Or open the generated Xcode project.
 
 ### Create a DMG locally
 
@@ -52,7 +52,7 @@ Or open `JSONClipboardFormatter.xcodeproj` in Xcode.
 ./scripts/build-dmg.sh
 ```
 
-Output: `dist/JSONClipboardFormatter-<version>.dmg`
+Output: `dist/BracePaste-<version>.dmg`
 
 ## Privacy
 

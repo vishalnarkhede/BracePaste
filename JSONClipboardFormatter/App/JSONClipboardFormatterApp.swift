@@ -2,7 +2,7 @@ import AppKit
 import SwiftUI
 
 @main
-struct JSONClipboardFormatterApp: App {
+struct BracePasteApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {

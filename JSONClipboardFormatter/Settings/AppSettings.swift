@@ -7,7 +7,7 @@ final class AppSettings: ObservableObject {
     static let shared = AppSettings()
 
     private let defaults: UserDefaults
-    private let prefix = "jsonClipboardFormatter."
+    private let prefix = "bracePaste."
 
     // MARK: - Trigger
 

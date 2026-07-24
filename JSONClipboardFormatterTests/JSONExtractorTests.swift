@@ -1,5 +1,5 @@
 import XCTest
-@testable import JSONClipboardFormatter
+@testable import BracePaste
 
 final class JSONExtractorTests: XCTestCase {
     func testValidObject() {

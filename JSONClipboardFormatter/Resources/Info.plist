@@ -29,6 +29,6 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSAccessibilityUsageDescription</key>
-	<string>JSON Clipboard Formatter observes keyboard events only to detect a double Command+C gesture so it can format copied JSON. Clipboard content is processed entirely on your Mac.</string>
+	<string>BracePaste observes keyboard events only to detect a double Command+C gesture so it can format copied JSON. Clipboard content is processed entirely on your Mac.</string>
 </dict>
 </plist>
