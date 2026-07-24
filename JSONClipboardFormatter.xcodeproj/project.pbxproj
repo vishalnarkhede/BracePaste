@@ -1,0 +1,664 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		17233D5DB5B21AD7D0119407 /* JSONCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E203A42D1D50695540284DD /* JSONCandidate.swift */; };
+		1E2D9F41493E086AED935F30 /* FormattedJSONViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C2A0B39BAFB8CADBFDA2F2 /* FormattedJSONViewModelTests.swift */; };
+		240AB3C08988D8DFB8D353C6 /* JSONSyntaxHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35AC3C86268664D32FAB86B /* JSONSyntaxHighlighter.swift */; };
+		2504C33D77ABA16B8D587DBC /* JSONClipboardFormatterApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CFCE4F39068BED1DDF010D9 /* JSONClipboardFormatterApp.swift */; };
+		2EC7010867370D351A7BE062 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6861EB3B20E2C3E0BFB9D2B /* PermissionManager.swift */; };
+		42BD29A38AC9DAB57DC218BB /* FormattingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CF41A41E432373F99F68940 /* FormattingService.swift */; };
+		4B9370C3DB52284938BD94FC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 249490F9A762ED1305CFA8CB /* AppDelegate.swift */; };
+		504F7504FC166DC7C3056272 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC3B303931EEC40A87A313AB /* AppSettings.swift */; };
+		50FA31F321BEE8EC0B0C9CA1 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33F7AB344498916381ABABE /* OnboardingView.swift */; };
+		54CECB704741D3332EAC29E0 /* JSONClipboardFormatterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB658FC3486DB52BB5396DF9 /* JSONClipboardFormatterUITests.swift */; };
+		5D4C8F9D1306C2A4F04C6B83 /* DoubleCopyMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCFAAEBE6AD93C0DAA04E0 /* DoubleCopyMonitor.swift */; };
+		70CE27A4735125F51BBA8650 /* ClipboardUndoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF883772F379AA6A3E838E7 /* ClipboardUndoManager.swift */; };
+		89E10004C4D2536D9A1FDB44 /* JSONExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC564445365A2210024F397 /* JSONExtractorTests.swift */; };
+		90E56A5D4729D009AC219B75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B5FDF4557385720D89F61 /* SettingsView.swift */; };
+		91DA09467F96E4B8C3A1420A /* PopupWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8AA1FFAF0E50E0D79A807D /* PopupWindowController.swift */; };
+		A137647A9D2F9D839A7237A3 /* JSONFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0DF3DEEEC26A3D5A6A1008 /* JSONFormatter.swift */; };
+		C22735EB0D5BEDB03395C45B /* GlobalShortcutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD42A033DE98CC5D66ED582 /* GlobalShortcutManager.swift */; };
+		CC8587E61D390A225C313571 /* PasteboardDoubleCopyMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1D670AD1287EE37FA1EA1 /* PasteboardDoubleCopyMonitor.swift */; };
+		CCFC0EB481186A408769E6D3 /* ShortcutRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7239085A81D18E7B3191107 /* ShortcutRecorderView.swift */; };
+		CF0FF9DB840F682314ACF8C4 /* FormattedJSONView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABEBF45753D8BE4B08E354C0 /* FormattedJSONView.swift */; };
+		D0F2CD6D17E21E7C24B55E6E /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A204662CBAB615DFF57F4A /* MenuBarController.swift */; };
+		D1DAF40A67A3D0169CAC6A42 /* ClipboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A7525C5C3144BFF4ADB9AC /* ClipboardManager.swift */; };
+		D458DEDB6E53E1DB58E414BD /* JSONExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479F25E17D81CCE3E8295BD8 /* JSONExtractor.swift */; };
+		D655B3F21CC55B874CEC692D /* BalancedJSONScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584B588337942AE2617FB098 /* BalancedJSONScanner.swift */; };
+		EA35DF528B65930DF4EB8358 /* ClipboardSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C9789856EAF553B23786FF /* ClipboardSnapshot.swift */; };
+		F7B0C50DF98EB16D8E98617B /* JSONEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D9640A7389AC4654A209E /* JSONEditorView.swift */; };
+		F8C6216B562115A10FAA7CCA /* JSONProcessingResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B441B13A01CB1D5C2E7FE77B /* JSONProcessingResult.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0353F9CE6F3325EC9CDD8553 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88B98D6A74ACC150E3D3B4DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A9838334952CB26212C3575;
+			remoteInfo = JSONClipboardFormatter;
+		};
+		84AF69AF16140024D4927076 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88B98D6A74ACC150E3D3B4DB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2A9838334952CB26212C3575;
+			remoteInfo = JSONClipboardFormatter;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02A7525C5C3144BFF4ADB9AC /* ClipboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardManager.swift; sourceTree = "<group>"; };
+		0AD42A033DE98CC5D66ED582 /* GlobalShortcutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcutManager.swift; sourceTree = "<group>"; };
+		0C0DF3DEEEC26A3D5A6A1008 /* JSONFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFormatter.swift; sourceTree = "<group>"; };
+		0CFCE4F39068BED1DDF010D9 /* JSONClipboardFormatterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONClipboardFormatterApp.swift; sourceTree = "<group>"; };
+		138D19ADE1FD604266EF7E7C /* JSONClipboardFormatterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONClipboardFormatterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		16CCFAAEBE6AD93C0DAA04E0 /* DoubleCopyMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoubleCopyMonitor.swift; sourceTree = "<group>"; };
+		1E203A42D1D50695540284DD /* JSONCandidate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCandidate.swift; sourceTree = "<group>"; };
+		234C7359F6A715982F08B2A6 /* JSONClipboardFormatterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JSONClipboardFormatterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		249490F9A762ED1305CFA8CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		479F25E17D81CCE3E8295BD8 /* JSONExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExtractor.swift; sourceTree = "<group>"; };
+		584B588337942AE2617FB098 /* BalancedJSONScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedJSONScanner.swift; sourceTree = "<group>"; };
+		5CC564445365A2210024F397 /* JSONExtractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExtractorTests.swift; sourceTree = "<group>"; };
+		6CA1F3419F73B40E3209E510 /* JSONClipboardFormatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSONClipboardFormatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C0B5FDF4557385720D89F61 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		7CF41A41E432373F99F68940 /* FormattingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattingService.swift; sourceTree = "<group>"; };
+		7DF883772F379AA6A3E838E7 /* ClipboardUndoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardUndoManager.swift; sourceTree = "<group>"; };
+		8C8AA1FFAF0E50E0D79A807D /* PopupWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupWindowController.swift; sourceTree = "<group>"; };
+		A5A204662CBAB615DFF57F4A /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarController.swift; sourceTree = "<group>"; };
+		ABEBF45753D8BE4B08E354C0 /* FormattedJSONView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattedJSONView.swift; sourceTree = "<group>"; };
+		B441B13A01CB1D5C2E7FE77B /* JSONProcessingResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONProcessingResult.swift; sourceTree = "<group>"; };
+		B6C0673545D38CCFF379A502 /* JSONClipboardFormatter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JSONClipboardFormatter.entitlements; sourceTree = "<group>"; };
+		BB658FC3486DB52BB5396DF9 /* JSONClipboardFormatterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONClipboardFormatterUITests.swift; sourceTree = "<group>"; };
+		CC3B303931EEC40A87A313AB /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		D33F7AB344498916381ABABE /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		D35AC3C86268664D32FAB86B /* JSONSyntaxHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSyntaxHighlighter.swift; sourceTree = "<group>"; };
+		D6861EB3B20E2C3E0BFB9D2B /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		D7239085A81D18E7B3191107 /* ShortcutRecorderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutRecorderView.swift; sourceTree = "<group>"; };
+		E38D9640A7389AC4654A209E /* JSONEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEditorView.swift; sourceTree = "<group>"; };
+		E7C9789856EAF553B23786FF /* ClipboardSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardSnapshot.swift; sourceTree = "<group>"; };
+		F3C2A0B39BAFB8CADBFDA2F2 /* FormattedJSONViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattedJSONViewModelTests.swift; sourceTree = "<group>"; };
+		FFE1D670AD1287EE37FA1EA1 /* PasteboardDoubleCopyMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasteboardDoubleCopyMonitor.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0D0AA29A90076EA7BFC5242E /* App */ = {
+			isa = PBXGroup;
+			children = (
+				249490F9A762ED1305CFA8CB /* AppDelegate.swift */,
+				0CFCE4F39068BED1DDF010D9 /* JSONClipboardFormatterApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		1B03759A28A85CCF651148E4 /* MenuBar */ = {
+			isa = PBXGroup;
+			children = (
+				A5A204662CBAB615DFF57F4A /* MenuBarController.swift */,
+			);
+			path = MenuBar;
+			sourceTree = "<group>";
+		};
+		1B2ACE6920B391497FDEC08B /* Permissions */ = {
+			isa = PBXGroup;
+			children = (
+				D33F7AB344498916381ABABE /* OnboardingView.swift */,
+				D6861EB3B20E2C3E0BFB9D2B /* PermissionManager.swift */,
+			);
+			path = Permissions;
+			sourceTree = "<group>";
+		};
+		2AEE63C7A33F8C89A49A2EED /* JSONClipboardFormatterUITests */ = {
+			isa = PBXGroup;
+			children = (
+				BB658FC3486DB52BB5396DF9 /* JSONClipboardFormatterUITests.swift */,
+			);
+			path = JSONClipboardFormatterUITests;
+			sourceTree = "<group>";
+		};
+		359C45FC2040999815909A6C /* JSONClipboardFormatter */ = {
+			isa = PBXGroup;
+			children = (
+				B6C0673545D38CCFF379A502 /* JSONClipboardFormatter.entitlements */,
+				0D0AA29A90076EA7BFC5242E /* App */,
+				401819A910916B82688B1B61 /* Clipboard */,
+				A88A6C7FF658C845BBA8266B /* JSON */,
+				38C2FDF4E48E27451BAB793D /* Keyboard */,
+				1B03759A28A85CCF651148E4 /* MenuBar */,
+				1B2ACE6920B391497FDEC08B /* Permissions */,
+				EAB109F280937C38AA6B784C /* Popup */,
+				7EA41C9AF168563F84D94EC8 /* Services */,
+				CF556100705014A3C7D7EC7D /* Settings */,
+			);
+			path = JSONClipboardFormatter;
+			sourceTree = "<group>";
+		};
+		38C2FDF4E48E27451BAB793D /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				16CCFAAEBE6AD93C0DAA04E0 /* DoubleCopyMonitor.swift */,
+				0AD42A033DE98CC5D66ED582 /* GlobalShortcutManager.swift */,
+				FFE1D670AD1287EE37FA1EA1 /* PasteboardDoubleCopyMonitor.swift */,
+			);
+			path = Keyboard;
+			sourceTree = "<group>";
+		};
+		391CE0D46594268C298E6662 = {
+			isa = PBXGroup;
+			children = (
+				359C45FC2040999815909A6C /* JSONClipboardFormatter */,
+				C0DDFB8AC362B656BD237365 /* JSONClipboardFormatterTests */,
+				2AEE63C7A33F8C89A49A2EED /* JSONClipboardFormatterUITests */,
+				F180B5A77477AA02E1B1967C /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		401819A910916B82688B1B61 /* Clipboard */ = {
+			isa = PBXGroup;
+			children = (
+				02A7525C5C3144BFF4ADB9AC /* ClipboardManager.swift */,
+				E7C9789856EAF553B23786FF /* ClipboardSnapshot.swift */,
+				7DF883772F379AA6A3E838E7 /* ClipboardUndoManager.swift */,
+			);
+			path = Clipboard;
+			sourceTree = "<group>";
+		};
+		7EA41C9AF168563F84D94EC8 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				7CF41A41E432373F99F68940 /* FormattingService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		A88A6C7FF658C845BBA8266B /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				584B588337942AE2617FB098 /* BalancedJSONScanner.swift */,
+				1E203A42D1D50695540284DD /* JSONCandidate.swift */,
+				479F25E17D81CCE3E8295BD8 /* JSONExtractor.swift */,
+				0C0DF3DEEEC26A3D5A6A1008 /* JSONFormatter.swift */,
+				B441B13A01CB1D5C2E7FE77B /* JSONProcessingResult.swift */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		C0DDFB8AC362B656BD237365 /* JSONClipboardFormatterTests */ = {
+			isa = PBXGroup;
+			children = (
+				F3C2A0B39BAFB8CADBFDA2F2 /* FormattedJSONViewModelTests.swift */,
+				5CC564445365A2210024F397 /* JSONExtractorTests.swift */,
+			);
+			path = JSONClipboardFormatterTests;
+			sourceTree = "<group>";
+		};
+		CF556100705014A3C7D7EC7D /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				CC3B303931EEC40A87A313AB /* AppSettings.swift */,
+				7C0B5FDF4557385720D89F61 /* SettingsView.swift */,
+				D7239085A81D18E7B3191107 /* ShortcutRecorderView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		EAB109F280937C38AA6B784C /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				ABEBF45753D8BE4B08E354C0 /* FormattedJSONView.swift */,
+				E38D9640A7389AC4654A209E /* JSONEditorView.swift */,
+				D35AC3C86268664D32FAB86B /* JSONSyntaxHighlighter.swift */,
+				8C8AA1FFAF0E50E0D79A807D /* PopupWindowController.swift */,
+			);
+			path = Popup;
+			sourceTree = "<group>";
+		};
+		F180B5A77477AA02E1B1967C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6CA1F3419F73B40E3209E510 /* JSONClipboardFormatter.app */,
+				234C7359F6A715982F08B2A6 /* JSONClipboardFormatterTests.xctest */,
+				138D19ADE1FD604266EF7E7C /* JSONClipboardFormatterUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2A9838334952CB26212C3575 /* JSONClipboardFormatter */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0A0D081F14701E2AE90C58EE /* Build configuration list for PBXNativeTarget "JSONClipboardFormatter" */;
+			buildPhases = (
+				2B42E1B900AF23F48A2579AD /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JSONClipboardFormatter;
+			packageProductDependencies = (
+			);
+			productName = JSONClipboardFormatter;
+			productReference = 6CA1F3419F73B40E3209E510 /* JSONClipboardFormatter.app */;
+			productType = "com.apple.product-type.application";
+		};
+		AA01472F7ECE4B57A5BFFC1B /* JSONClipboardFormatterUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5A5580C57F495ED626D8E091 /* Build configuration list for PBXNativeTarget "JSONClipboardFormatterUITests" */;
+			buildPhases = (
+				EC0798FD5FB6939F66AF8772 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1675D056B68D95282024AA91 /* PBXTargetDependency */,
+			);
+			name = JSONClipboardFormatterUITests;
+			packageProductDependencies = (
+			);
+			productName = JSONClipboardFormatterUITests;
+			productReference = 138D19ADE1FD604266EF7E7C /* JSONClipboardFormatterUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		D086C5B084827F8B93491179 /* JSONClipboardFormatterTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA040B75A5367A1927B766CE /* Build configuration list for PBXNativeTarget "JSONClipboardFormatterTests" */;
+			buildPhases = (
+				95AAA4A192344BE54E0B0652 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9C64B1BCD397ABB375A7F24B /* PBXTargetDependency */,
+			);
+			name = JSONClipboardFormatterTests;
+			packageProductDependencies = (
+			);
+			productName = JSONClipboardFormatterTests;
+			productReference = 234C7359F6A715982F08B2A6 /* JSONClipboardFormatterTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		88B98D6A74ACC150E3D3B4DB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					2A9838334952CB26212C3575 = {
+						ProvisioningStyle = Automatic;
+					};
+					AA01472F7ECE4B57A5BFFC1B = {
+						ProvisioningStyle = Automatic;
+						TestTargetID = 2A9838334952CB26212C3575;
+					};
+					D086C5B084827F8B93491179 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = FB88DE9C1B9369B6D066C48B /* Build configuration list for PBXProject "JSONClipboardFormatter" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 391CE0D46594268C298E6662;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = F180B5A77477AA02E1B1967C /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2A9838334952CB26212C3575 /* JSONClipboardFormatter */,
+				D086C5B084827F8B93491179 /* JSONClipboardFormatterTests */,
+				AA01472F7ECE4B57A5BFFC1B /* JSONClipboardFormatterUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2B42E1B900AF23F48A2579AD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4B9370C3DB52284938BD94FC /* AppDelegate.swift in Sources */,
+				504F7504FC166DC7C3056272 /* AppSettings.swift in Sources */,
+				D655B3F21CC55B874CEC692D /* BalancedJSONScanner.swift in Sources */,
+				D1DAF40A67A3D0169CAC6A42 /* ClipboardManager.swift in Sources */,
+				EA35DF528B65930DF4EB8358 /* ClipboardSnapshot.swift in Sources */,
+				70CE27A4735125F51BBA8650 /* ClipboardUndoManager.swift in Sources */,
+				5D4C8F9D1306C2A4F04C6B83 /* DoubleCopyMonitor.swift in Sources */,
+				CF0FF9DB840F682314ACF8C4 /* FormattedJSONView.swift in Sources */,
+				42BD29A38AC9DAB57DC218BB /* FormattingService.swift in Sources */,
+				C22735EB0D5BEDB03395C45B /* GlobalShortcutManager.swift in Sources */,
+				17233D5DB5B21AD7D0119407 /* JSONCandidate.swift in Sources */,
+				2504C33D77ABA16B8D587DBC /* JSONClipboardFormatterApp.swift in Sources */,
+				F7B0C50DF98EB16D8E98617B /* JSONEditorView.swift in Sources */,
+				D458DEDB6E53E1DB58E414BD /* JSONExtractor.swift in Sources */,
+				A137647A9D2F9D839A7237A3 /* JSONFormatter.swift in Sources */,
+				F8C6216B562115A10FAA7CCA /* JSONProcessingResult.swift in Sources */,
+				240AB3C08988D8DFB8D353C6 /* JSONSyntaxHighlighter.swift in Sources */,
+				D0F2CD6D17E21E7C24B55E6E /* MenuBarController.swift in Sources */,
+				50FA31F321BEE8EC0B0C9CA1 /* OnboardingView.swift in Sources */,
+				CC8587E61D390A225C313571 /* PasteboardDoubleCopyMonitor.swift in Sources */,
+				2EC7010867370D351A7BE062 /* PermissionManager.swift in Sources */,
+				91DA09467F96E4B8C3A1420A /* PopupWindowController.swift in Sources */,
+				90E56A5D4729D009AC219B75 /* SettingsView.swift in Sources */,
+				CCFC0EB481186A408769E6D3 /* ShortcutRecorderView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		95AAA4A192344BE54E0B0652 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1E2D9F41493E086AED935F30 /* FormattedJSONViewModelTests.swift in Sources */,
+				89E10004C4D2536D9A1FDB44 /* JSONExtractorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EC0798FD5FB6939F66AF8772 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54CECB704741D3332EAC29E0 /* JSONClipboardFormatterUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		1675D056B68D95282024AA91 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A9838334952CB26212C3575 /* JSONClipboardFormatter */;
+			targetProxy = 0353F9CE6F3325EC9CDD8553 /* PBXContainerItemProxy */;
+		};
+		9C64B1BCD397ABB375A7F24B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2A9838334952CB26212C3575 /* JSONClipboardFormatter */;
+			targetProxy = 84AF69AF16140024D4927076 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		5B83691F996629D3B3BAB9E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vishalnarkhede.JSONClipboardFormatterUITests;
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = JSONClipboardFormatter;
+			};
+			name = Release;
+		};
+		78CE3520FE3D9F357439A5A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		8B1793D0E4137FB0E242630F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vishalnarkhede.JSONClipboardFormatterTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JSON Clipboard Formatter.app/Contents/MacOS/JSON Clipboard Formatter";
+			};
+			name = Release;
+		};
+		9C689411F1C54B416B33B0C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = JSONClipboardFormatter/JSONClipboardFormatter.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = JSONClipboardFormatter/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vishalnarkhede.JSONClipboardFormatter;
+				PRODUCT_MODULE_NAME = JSONClipboardFormatter;
+				PRODUCT_NAME = "JSON Clipboard Formatter";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A576DC21AA061A2A45BD179E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = JSONClipboardFormatter/JSONClipboardFormatter.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = JSONClipboardFormatter/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.vishalnarkhede.JSONClipboardFormatter;
+				PRODUCT_MODULE_NAME = JSONClipboardFormatter;
+				PRODUCT_NAME = "JSON Clipboard Formatter";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		AF0D18FD0AA848C74EEDC010 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vishalnarkhede.JSONClipboardFormatterUITests;
+				SDKROOT = macosx;
+				TEST_TARGET_NAME = JSONClipboardFormatter;
+			};
+			name = Debug;
+		};
+		C06CE42685A5FEA7E61D823C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vishalnarkhede.JSONClipboardFormatterTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/JSON Clipboard Formatter.app/Contents/MacOS/JSON Clipboard Formatter";
+			};
+			name = Debug;
+		};
+		DC2D18D16D19505F21F95796 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0A0D081F14701E2AE90C58EE /* Build configuration list for PBXNativeTarget "JSONClipboardFormatter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9C689411F1C54B416B33B0C3 /* Debug */,
+				A576DC21AA061A2A45BD179E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5A5580C57F495ED626D8E091 /* Build configuration list for PBXNativeTarget "JSONClipboardFormatterUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AF0D18FD0AA848C74EEDC010 /* Debug */,
+				5B83691F996629D3B3BAB9E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		CA040B75A5367A1927B766CE /* Build configuration list for PBXNativeTarget "JSONClipboardFormatterTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C06CE42685A5FEA7E61D823C /* Debug */,
+				8B1793D0E4137FB0E242630F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		FB88DE9C1B9369B6D066C48B /* Build configuration list for PBXProject "JSONClipboardFormatter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DC2D18D16D19505F21F95796 /* Debug */,
+				78CE3520FE3D9F357439A5A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 88B98D6A74ACC150E3D3B4DB /* Project object */;
+}
