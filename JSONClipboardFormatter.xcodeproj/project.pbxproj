@@ -517,7 +517,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = JSONClipboardFormatter/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vishalnarkhede.BracePaste;
 				PRODUCT_MODULE_NAME = BracePaste;
 				PRODUCT_NAME = BracePaste;
@@ -535,7 +535,7 @@
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = JSONClipboardFormatter/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vishalnarkhede.BracePaste;
 				PRODUCT_MODULE_NAME = BracePaste;
 				PRODUCT_NAME = BracePaste;
