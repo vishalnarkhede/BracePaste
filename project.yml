@@ -18,11 +18,9 @@ targets:
     sources:
       - path: JSONClipboardFormatter
         excludes:
-          - Resources/**
+          - Resources/Info.plist
     resources:
       - path: JSONClipboardFormatter/Resources/Assets.xcassets
-      - path: JSONClipboardFormatter/Resources/Info.plist
-        buildPhase: none
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.vishalnarkhede.BracePaste

@@ -19,6 +19,7 @@
 		54CECB704741D3332EAC29E0 /* JSONClipboardFormatterUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB658FC3486DB52BB5396DF9 /* JSONClipboardFormatterUITests.swift */; };
 		5D4C8F9D1306C2A4F04C6B83 /* DoubleCopyMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CCFAAEBE6AD93C0DAA04E0 /* DoubleCopyMonitor.swift */; };
 		70CE27A4735125F51BBA8650 /* ClipboardUndoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF883772F379AA6A3E838E7 /* ClipboardUndoManager.swift */; };
+		747C4A5E55B4E35863484D7E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEED025693184B136CD6D54B /* Assets.xcassets */; };
 		89E10004C4D2536D9A1FDB44 /* JSONExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC564445365A2210024F397 /* JSONExtractorTests.swift */; };
 		90E56A5D4729D009AC219B75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B5FDF4557385720D89F61 /* SettingsView.swift */; };
 		91DA09467F96E4B8C3A1420A /* PopupWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8AA1FFAF0E50E0D79A807D /* PopupWindowController.swift */; };
@@ -76,6 +77,7 @@
 		B441B13A01CB1D5C2E7FE77B /* JSONProcessingResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONProcessingResult.swift; sourceTree = "<group>"; };
 		B6C0673545D38CCFF379A502 /* JSONClipboardFormatter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JSONClipboardFormatter.entitlements; sourceTree = "<group>"; };
 		BB658FC3486DB52BB5396DF9 /* JSONClipboardFormatterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONClipboardFormatterUITests.swift; sourceTree = "<group>"; };
+		BEED025693184B136CD6D54B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC3B303931EEC40A87A313AB /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		D33F7AB344498916381ABABE /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		D35AC3C86268664D32FAB86B /* JSONSyntaxHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSyntaxHighlighter.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				1B03759A28A85CCF651148E4 /* MenuBar */,
 				1B2ACE6920B391497FDEC08B /* Permissions */,
 				EAB109F280937C38AA6B784C /* Popup */,
+				4663F0ABC6BE8D5172ACB19D /* Resources */,
 				7EA41C9AF168563F84D94EC8 /* Services */,
 				CF556100705014A3C7D7EC7D /* Settings */,
 			);
@@ -167,6 +170,14 @@
 				7DF883772F379AA6A3E838E7 /* ClipboardUndoManager.swift */,
 			);
 			path = Clipboard;
+			sourceTree = "<group>";
+		};
+		4663F0ABC6BE8D5172ACB19D /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BEED025693184B136CD6D54B /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		7EA41C9AF168563F84D94EC8 /* Services */ = {
@@ -237,6 +248,7 @@
 			buildConfigurationList = 0A0D081F14701E2AE90C58EE /* Build configuration list for PBXNativeTarget "JSONClipboardFormatter" */;
 			buildPhases = (
 				2B42E1B900AF23F48A2579AD /* Sources */,
+				E886C0A2E4311CA5DF60F357 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -326,6 +338,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		E886C0A2E4311CA5DF60F357 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				747C4A5E55B4E35863484D7E /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2B42E1B900AF23F48A2579AD /* Sources */ = {
