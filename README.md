@@ -29,6 +29,17 @@ or with an optional global keyboard shortcut.
 
 ## Install
 
+### Homebrew (recommended)
+
+```bash
+brew install --cask vishalnarkhede/tap/bracepaste
+```
+
+> Since the app is ad-hoc signed, you can skip the Gatekeeper warning entirely with
+> `brew install --cask --no-quarantine vishalnarkhede/tap/bracepaste`.
+
+### Manual (DMG)
+
 1. Download the latest **`.dmg`** from [Releases](https://github.com/vishalnarkhede/BracePaste/releases/latest).
 2. Open the DMG and drag **BracePaste** into **Applications**.
 3. Launch it from Applications (or Spotlight). Look for the `{ }` icon in the menu bar.
