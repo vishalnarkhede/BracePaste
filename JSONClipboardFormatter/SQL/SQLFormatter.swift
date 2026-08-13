@@ -7,11 +7,12 @@ import Foundation
 enum SQLFormatter {
     // MARK: - Detection
 
+    /// Statements that benefit from formatting. One-liner commands that read
+    /// like English sentence openers (SHOW, COPY, GRANT, BEGIN, …) are
+    /// deliberately excluded — they caused false positives on prose.
     private static let starterKeywords: Set<String> = [
         "SELECT", "INSERT", "UPDATE", "DELETE", "WITH", "CREATE", "ALTER",
-        "DROP", "TRUNCATE", "EXPLAIN", "MERGE", "REPLACE", "GRANT", "REVOKE",
-        "BEGIN", "COMMIT", "ROLLBACK", "VACUUM", "ANALYZE", "COPY", "SHOW",
-        "DECLARE", "CALL"
+        "DROP", "EXPLAIN", "MERGE", "REPLACE"
     ]
 
     /// Companion keyword that must also appear for ambiguous starters,
@@ -27,9 +28,13 @@ enum SQLFormatter {
         "DROP": ["TABLE", "INDEX", "VIEW", "FUNCTION", "DATABASE", "SCHEMA", "TYPE", "TRIGGER", "EXTENSION", "SEQUENCE"],
         "EXPLAIN": ["SELECT", "INSERT", "UPDATE", "DELETE"],
         "MERGE": ["INTO"],
-        "GRANT": ["ON"],
-        "REVOKE": ["ON"],
-        "COPY": ["FROM", "TO"]
+        "REPLACE": ["INTO"]
+    ]
+
+    /// Bare English function words that essentially never appear in SQL
+    /// outside string literals. Their presence demands a stronger signal.
+    private static let englishStopwords: Set<String> = [
+        "THE", "A", "AN", "THIS", "THAT", "YOUR", "MY", "OUR", "ME", "PLEASE"
     ]
 
     static func isLikelySQL(_ text: String) -> Bool {
@@ -56,10 +61,13 @@ enum SQLFormatter {
         let hasStrongSignal = trimmed.contains(";")
             || trimmed.contains("'")
             || trimmed.contains("=")
-            || trimmed.contains("*")
+        let hasWeakSignal = trimmed.contains("*")
             || trimmed.contains("(")
             || String(firstWord) == starter
-        return hasStrongSignal
+        if !englishStopwords.isDisjoint(with: words) {
+            return hasStrongSignal
+        }
+        return hasStrongSignal || hasWeakSignal
     }
 
     private static func stripLeadingComments(_ text: String) -> String {

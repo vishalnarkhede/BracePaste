@@ -27,6 +27,20 @@ final class SQLFormatterDetectionTests: XCTestCase {
         XCTAssertFalse(SQLFormatter.isLikelySQL("create something amazing"))
     }
 
+    func testEnglishWithParensAndSentenceOpenersRejected() {
+        XCTAssertFalse(SQLFormatter.isLikelySQL(
+            "Show HN: BracePaste – Format JSON/SQL from the clipboard with double Cmd-C (macOS)"
+        ))
+        XCTAssertFalse(SQLFormatter.isLikelySQL("Delete old logs from the server (weekly)"))
+        XCTAssertFalse(SQLFormatter.isLikelySQL("Copy the file from Downloads (as backup)"))
+        XCTAssertFalse(SQLFormatter.isLikelySQL("Select an item from the menu (top right)"))
+    }
+
+    func testRealQueriesStillDetectedWithStopwordInString() {
+        XCTAssertTrue(SQLFormatter.isLikelySQL("select * from books where title = 'The Trial'"))
+        XCTAssertTrue(SQLFormatter.isLikelySQL("DELETE FROM logs WHERE created_at < now() - interval '7 days';"))
+    }
+
     func testJSONAndLogsRejected() {
         XCTAssertFalse(SQLFormatter.isLikelySQL(#"{"a":1}"#))
         XCTAssertFalse(SQLFormatter.isLikelySQL(#"Agent result: payload={"status":"ok"} done"#))
