@@ -1,8 +1,8 @@
 <div align="center">
 
-# `{ }` BracePaste
+<img src="assets/cover.png" alt="BracePaste — Copy. Copy. Formatted." width="100%">
 
-**Copy. Copy. Formatted.**
+# BracePaste
 
 A native macOS menu bar app that formats JSON — and SQL — from your clipboard
 with a double **⌘C** gesture.
