@@ -35,8 +35,9 @@ or with an optional global keyboard shortcut.
 brew install --cask vishalnarkhede/tap/bracepaste
 ```
 
-> Since the app is ad-hoc signed, you can skip the Gatekeeper warning entirely with
-> `brew install --cask --no-quarantine vishalnarkhede/tap/bracepaste`.
+> Since the app is ad-hoc signed, macOS will warn on first launch (see below). To skip
+> that entirely, clear the quarantine flag after installing:
+> `xattr -dr com.apple.quarantine /Applications/BracePaste.app`
 
 ### Manual (DMG)
 
