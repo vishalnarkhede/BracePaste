@@ -80,7 +80,22 @@ enum JSONExtractor {
             )
         }
 
-        // 5. Balanced scan of surrounding text
+        // 5. Structured content (SQL). A recognized SQL statement is formatted
+        // whole — including any embedded JSON literals — instead of being
+        // stripped down to the JSON by the balanced scan below.
+        if candidates.isEmpty, SQLFormatter.isLikelySQL(trimmed) {
+            let formatted = SQLFormatter.format(trimmed, indentation: indentation)
+            let minified = SQLFormatter.minify(trimmed)
+            return .success(
+                formattedJSON: formatted,
+                minifiedJSON: minified,
+                source: .sql,
+                candidateRange: nil,
+                originalInput: original
+            )
+        }
+
+        // 6. Balanced scan of surrounding text
         let scanned = BalancedJSONScanner.findCandidates(in: trimmed)
         for candidate in scanned {
             if let object = JSONFormatter.parseObjectOrArray(candidate.text) {

@@ -163,6 +163,10 @@ final class FormattedJSONViewModel: ObservableObject {
             onCopy(minified)
             setConfirmation("Minified JSON copied")
             errorMessage = nil
+        } else if SQLFormatter.isLikelySQL(editorText) {
+            onCopy(SQLFormatter.minify(editorText))
+            setConfirmation("Single-line SQL copied")
+            errorMessage = nil
         } else {
             errorMessage = "Editor contents are not valid JSON."
         }

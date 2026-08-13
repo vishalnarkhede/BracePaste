@@ -77,6 +77,8 @@ extension JSONExtractionSource {
             return "Extracted from surrounding text"
         case .escapedJSON:
             return "Decoded from escaped JSON"
+        case .sql:
+            return "Formatted SQL query"
         }
     }
 }

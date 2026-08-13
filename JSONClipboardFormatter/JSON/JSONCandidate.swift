@@ -7,6 +7,7 @@ enum JSONExtractionSource: String, Equatable, Sendable {
     case unlabelledCodeFence
     case surroundingText
     case escapedJSON
+    case sql
 }
 
 /// A plausible JSON substring discovered during extraction.

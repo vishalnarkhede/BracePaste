@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16E67C5F5D0FDF0323B74A94 /* SQLFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C43551A043C725F129EAFA /* SQLFormatter.swift */; };
 		17233D5DB5B21AD7D0119407 /* JSONCandidate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E203A42D1D50695540284DD /* JSONCandidate.swift */; };
 		1E2D9F41493E086AED935F30 /* FormattedJSONViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3C2A0B39BAFB8CADBFDA2F2 /* FormattedJSONViewModelTests.swift */; };
 		240AB3C08988D8DFB8D353C6 /* JSONSyntaxHighlighter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35AC3C86268664D32FAB86B /* JSONSyntaxHighlighter.swift */; };
@@ -33,6 +34,7 @@
 		D458DEDB6E53E1DB58E414BD /* JSONExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479F25E17D81CCE3E8295BD8 /* JSONExtractor.swift */; };
 		D655B3F21CC55B874CEC692D /* BalancedJSONScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 584B588337942AE2617FB098 /* BalancedJSONScanner.swift */; };
 		EA35DF528B65930DF4EB8358 /* ClipboardSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7C9789856EAF553B23786FF /* ClipboardSnapshot.swift */; };
+		EC27FE8C06829FAC1777580A /* SQLFormatterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2205C60107FF63AB0C8281E /* SQLFormatterTests.swift */; };
 		F7B0C50DF98EB16D8E98617B /* JSONEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E38D9640A7389AC4654A209E /* JSONEditorView.swift */; };
 		F8C6216B562115A10FAA7CCA /* JSONProcessingResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B441B13A01CB1D5C2E7FE77B /* JSONProcessingResult.swift */; };
 /* End PBXBuildFile section */
@@ -56,6 +58,7 @@
 
 /* Begin PBXFileReference section */
 		02A7525C5C3144BFF4ADB9AC /* ClipboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardManager.swift; sourceTree = "<group>"; };
+		06C43551A043C725F129EAFA /* SQLFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLFormatter.swift; sourceTree = "<group>"; };
 		0AD42A033DE98CC5D66ED582 /* GlobalShortcutManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlobalShortcutManager.swift; sourceTree = "<group>"; };
 		0C0DF3DEEEC26A3D5A6A1008 /* JSONFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONFormatter.swift; sourceTree = "<group>"; };
 		0CFCE4F39068BED1DDF010D9 /* JSONClipboardFormatterApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONClipboardFormatterApp.swift; sourceTree = "<group>"; };
@@ -79,6 +82,7 @@
 		BB658FC3486DB52BB5396DF9 /* JSONClipboardFormatterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONClipboardFormatterUITests.swift; sourceTree = "<group>"; };
 		BEED025693184B136CD6D54B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC3B303931EEC40A87A313AB /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		D2205C60107FF63AB0C8281E /* SQLFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLFormatterTests.swift; sourceTree = "<group>"; };
 		D33F7AB344498916381ABABE /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		D35AC3C86268664D32FAB86B /* JSONSyntaxHighlighter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONSyntaxHighlighter.swift; sourceTree = "<group>"; };
 		D6861EB3B20E2C3E0BFB9D2B /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
@@ -138,6 +142,7 @@
 				4663F0ABC6BE8D5172ACB19D /* Resources */,
 				7EA41C9AF168563F84D94EC8 /* Services */,
 				CF556100705014A3C7D7EC7D /* Settings */,
+				DAC1EC0220436B4D904E0980 /* SQL */,
 			);
 			path = JSONClipboardFormatter;
 			sourceTree = "<group>";
@@ -205,6 +210,7 @@
 			children = (
 				F3C2A0B39BAFB8CADBFDA2F2 /* FormattedJSONViewModelTests.swift */,
 				5CC564445365A2210024F397 /* JSONExtractorTests.swift */,
+				D2205C60107FF63AB0C8281E /* SQLFormatterTests.swift */,
 			);
 			path = JSONClipboardFormatterTests;
 			sourceTree = "<group>";
@@ -217,6 +223,14 @@
 				D7239085A81D18E7B3191107 /* ShortcutRecorderView.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		DAC1EC0220436B4D904E0980 /* SQL */ = {
+			isa = PBXGroup;
+			children = (
+				06C43551A043C725F129EAFA /* SQLFormatter.swift */,
+			);
+			path = SQL;
 			sourceTree = "<group>";
 		};
 		EAB109F280937C38AA6B784C /* Popup */ = {
@@ -377,6 +391,7 @@
 				CC8587E61D390A225C313571 /* PasteboardDoubleCopyMonitor.swift in Sources */,
 				2EC7010867370D351A7BE062 /* PermissionManager.swift in Sources */,
 				91DA09467F96E4B8C3A1420A /* PopupWindowController.swift in Sources */,
+				16E67C5F5D0FDF0323B74A94 /* SQLFormatter.swift in Sources */,
 				90E56A5D4729D009AC219B75 /* SettingsView.swift in Sources */,
 				CCFC0EB481186A408769E6D3 /* ShortcutRecorderView.swift in Sources */,
 			);
@@ -388,6 +403,7 @@
 			files = (
 				1E2D9F41493E086AED935F30 /* FormattedJSONViewModelTests.swift in Sources */,
 				89E10004C4D2536D9A1FDB44 /* JSONExtractorTests.swift in Sources */,
+				EC27FE8C06829FAC1777580A /* SQLFormatterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
