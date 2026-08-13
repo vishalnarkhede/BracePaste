@@ -1,73 +1,29 @@
 import Foundation
 
-/// Detects and pretty-prints SQL statements so that structured clipboard
-/// content is formatted as a whole instead of being stripped down to any
-/// embedded JSON. JSON found inside single-quoted string literals is
-/// pretty-printed in place.
+/// SQL detection and formatting backed by real parsers (bundled via
+/// ScriptEngine): node-sql-parser's grammar decides what is SQL, and
+/// sql-formatter does the layout. JSON found inside single-quoted string
+/// literals is pretty-printed in place as a post-pass. The only native logic
+/// kept here is a lightweight tokenizer used for minification and the
+/// embedded-JSON pass.
 enum SQLFormatter {
     // MARK: - Detection
 
-    /// Statements that benefit from formatting. One-liner commands that read
-    /// like English sentence openers (SHOW, COPY, GRANT, BEGIN, …) are
-    /// deliberately excluded — they caused false positives on prose.
-    private static let starterKeywords: Set<String> = [
+    /// Cheap pre-filter so the parser doesn't run on every random copy.
+    /// Purely a performance gate — the grammar makes the actual decision.
+    private static let statementStarters: Set<String> = [
         "SELECT", "INSERT", "UPDATE", "DELETE", "WITH", "CREATE", "ALTER",
-        "DROP", "EXPLAIN", "MERGE", "REPLACE"
-    ]
-
-    /// Companion keyword that must also appear for ambiguous starters,
-    /// so English sentences ("Select the best option…") don't qualify.
-    private static let requiredCompanions: [String: Set<String>] = [
-        "SELECT": ["FROM"],
-        "INSERT": ["INTO"],
-        "UPDATE": ["SET"],
-        "DELETE": ["FROM"],
-        "WITH": ["SELECT", "INSERT", "UPDATE", "DELETE"],
-        "CREATE": ["TABLE", "INDEX", "VIEW", "FUNCTION", "DATABASE", "SCHEMA", "TYPE", "TRIGGER", "EXTENSION", "SEQUENCE"],
-        "ALTER": ["TABLE", "INDEX", "VIEW", "COLUMN", "DATABASE", "SCHEMA", "TYPE", "SEQUENCE"],
-        "DROP": ["TABLE", "INDEX", "VIEW", "FUNCTION", "DATABASE", "SCHEMA", "TYPE", "TRIGGER", "EXTENSION", "SEQUENCE"],
-        "EXPLAIN": ["SELECT", "INSERT", "UPDATE", "DELETE"],
-        "MERGE": ["INTO"],
-        "REPLACE": ["INTO"]
-    ]
-
-    /// Bare English function words that essentially never appear in SQL
-    /// outside string literals. Their presence demands a stronger signal.
-    private static let englishStopwords: Set<String> = [
-        "THE", "A", "AN", "THIS", "THAT", "YOUR", "MY", "OUR", "ME", "PLEASE"
+        "DROP", "TRUNCATE", "EXPLAIN", "MERGE", "REPLACE", "SHOW", "GRANT", "REVOKE"
     ]
 
     static func isLikelySQL(_ text: String) -> Bool {
         let trimmed = stripLeadingComments(text.trimmingCharacters(in: .whitespacesAndNewlines))
         guard !trimmed.isEmpty else { return false }
-
-        guard let firstWord = trimmed.split(whereSeparator: { !$0.isLetter }).first else {
+        guard let firstWord = trimmed.split(whereSeparator: { !$0.isLetter }).first,
+              statementStarters.contains(firstWord.uppercased()) else {
             return false
         }
-        let starter = firstWord.uppercased()
-        guard starterKeywords.contains(starter) else { return false }
-
-        let words = Set(
-            trimmed
-                .split(whereSeparator: { !($0.isLetter || $0 == "_") })
-                .map { $0.uppercased() }
-        )
-        if let companions = requiredCompanions[starter] {
-            guard !words.isEmpty, !companions.isDisjoint(with: words) else { return false }
-        }
-
-        // Structural signal separates SQL from an English sentence that
-        // happens to start with a keyword.
-        let hasStrongSignal = trimmed.contains(";")
-            || trimmed.contains("'")
-            || trimmed.contains("=")
-        let hasWeakSignal = trimmed.contains("*")
-            || trimmed.contains("(")
-            || String(firstWord) == starter
-        if !englishStopwords.isDisjoint(with: words) {
-            return hasStrongSignal
-        }
-        return hasStrongSignal || hasWeakSignal
+        return ScriptEngine.shared.parsesAsSQL(trimmed)
     }
 
     private static func stripLeadingComments(_ text: String) -> String {
@@ -92,13 +48,203 @@ enum SQLFormatter {
         }
     }
 
-    // MARK: - Tokenizer
+    // MARK: - Formatting
+
+    /// Formats via sql-formatter, then pretty-prints JSON literals in place.
+    /// Returns nil when the text can't be formatted (callers treat that as
+    /// "not SQL after all").
+    static func format(
+        _ sql: String,
+        indentation: IndentationStyle = .twoSpaces
+    ) -> String? {
+        let trimmed = sql.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard let formatted = ScriptEngine.shared.formatSQL(trimmed, indentation: indentation) else {
+            return nil
+        }
+        return prettifyEmbeddedJSON(in: formatted, indentation: indentation)
+    }
+
+    /// Collapses a statement to a single line; embedded JSON is minified.
+    static func minify(_ sql: String) -> String {
+        let tokens = tokenize(sql.trimmingCharacters(in: .whitespacesAndNewlines))
+        var output = ""
+        var previous: Token?
+
+        for token in tokens {
+            if case .lineComment = token.kind { continue }
+
+            var text = token.text
+            if case .string = token.kind {
+                text = minifyStringLiteral(token.text)
+            }
+
+            if let prev = previous, !output.isEmpty {
+                let noSpaceBefore: Bool
+                switch token.kind {
+                case .comma, .semicolon, .closeParen:
+                    noSpaceBefore = true
+                case .openParen:
+                    noSpaceBefore = prev.kind == .word || (prev.kind == .symbol && prev.text == "::")
+                case .symbol where token.text == "::":
+                    noSpaceBefore = true
+                default:
+                    noSpaceBefore = prev.kind == .openParen || (prev.kind == .symbol && prev.text == "::")
+                }
+                if !noSpaceBefore { output += " " }
+            }
+            output += text
+            previous = token
+        }
+        return output
+    }
+
+    // MARK: - Embedded JSON post-pass
+
+    /// Walks formatted SQL and pretty-prints JSON object/array content found
+    /// inside plain single-quoted string literals, preserving all other
+    /// layout exactly. Continuation lines are indented past the literal's
+    /// own line indent.
+    static func prettifyEmbeddedJSON(
+        in formatted: String,
+        indentation: IndentationStyle
+    ) -> String {
+        let chars = Array(formatted)
+        var output = ""
+        output.reserveCapacity(chars.count)
+        var i = 0
+
+        func currentLineIndent() -> String {
+            var indent = ""
+            var j = output.endIndex
+            while j > output.startIndex {
+                let prev = output.index(before: j)
+                if output[prev] == "\n" { break }
+                j = prev
+            }
+            var k = j
+            while k < output.endIndex, output[k] == " " || output[k] == "\t" {
+                indent.append(output[k])
+                k = output.index(after: k)
+            }
+            return indent
+        }
+
+        while i < chars.count {
+            let ch = chars[i]
+
+            // Line comment
+            if ch == "-", i + 1 < chars.count, chars[i + 1] == "-" {
+                while i < chars.count, chars[i] != "\n" {
+                    output.append(chars[i])
+                    i += 1
+                }
+                continue
+            }
+
+            // Block comment
+            if ch == "/", i + 1 < chars.count, chars[i + 1] == "*" {
+                output.append(contentsOf: "/*")
+                i += 2
+                while i < chars.count {
+                    if chars[i] == "*", i + 1 < chars.count, chars[i + 1] == "/" {
+                        output.append(contentsOf: "*/")
+                        i += 2
+                        break
+                    }
+                    output.append(chars[i])
+                    i += 1
+                }
+                continue
+            }
+
+            // Double-quoted identifier — copy verbatim
+            if ch == "\"" {
+                output.append(ch)
+                i += 1
+                while i < chars.count {
+                    output.append(chars[i])
+                    if chars[i] == "\"" { i += 1; break }
+                    i += 1
+                }
+                continue
+            }
+
+            // Single-quoted string literal
+            if ch == "'" {
+                var j = i + 1
+                while j < chars.count {
+                    if chars[j] == "'" {
+                        if j + 1 < chars.count, chars[j + 1] == "'" {
+                            j += 2
+                            continue
+                        }
+                        break
+                    }
+                    j += 1
+                }
+                let end = min(j, chars.count - 1)
+                let literal = String(chars[i...end])
+                output += prettifiedLiteral(
+                    literal,
+                    indentation: indentation,
+                    lineIndent: currentLineIndent()
+                )
+                i = end + 1
+                continue
+            }
+
+            output.append(ch)
+            i += 1
+        }
+        return output
+    }
+
+    private static func prettifiedLiteral(
+        _ literal: String,
+        indentation: IndentationStyle,
+        lineIndent: String
+    ) -> String {
+        guard let (content, rebuild) = unwrapSingleQuoted(literal) else { return literal }
+        guard let object = JSONFormatter.parseObjectOrArray(content),
+              let pretty = try? JSONFormatter.format(object, indentation: indentation) else {
+            return literal
+        }
+        let continuationIndent = lineIndent + indentation.indentString
+        let indented = pretty
+            .split(separator: "\n", omittingEmptySubsequences: false)
+            .enumerated()
+            .map { $0.offset == 0 ? String($0.element) : continuationIndent + String($0.element) }
+            .joined(separator: "\n")
+        return rebuild(indented)
+    }
+
+    private static func minifyStringLiteral(_ literal: String) -> String {
+        guard let (content, rebuild) = unwrapSingleQuoted(literal) else { return literal }
+        guard let object = JSONFormatter.parseObjectOrArray(content),
+              let minified = try? JSONFormatter.minify(object) else {
+            return literal
+        }
+        return rebuild(minified)
+    }
+
+    /// Returns the unescaped content of a plain `'...'` literal and a closure
+    /// that re-wraps (and re-escapes) replacement content the same way.
+    private static func unwrapSingleQuoted(_ literal: String) -> (String, (String) -> String)? {
+        guard literal.count >= 2, literal.hasPrefix("'"), literal.hasSuffix("'") else { return nil }
+        let inner = String(literal.dropFirst().dropLast())
+        let content = inner.replacingOccurrences(of: "''", with: "'")
+        return (content, { newContent in
+            "'" + newContent.replacingOccurrences(of: "'", with: "''") + "'"
+        })
+    }
+
+    // MARK: - Tokenizer (minify only)
 
     private enum TokenKind {
         case word
         case number
-        case string          // single-quoted, includes quotes
-        case quotedIdentifier // double-quoted or backticked, includes quotes
+        case string
+        case quotedIdentifier
         case lineComment
         case blockComment
         case openParen
@@ -176,7 +322,6 @@ enum SQLFormatter {
                 continue
             }
 
-            // Dollar-quoted string ($tag$ ... $tag$), common in Postgres.
             if ch == "$" {
                 var j = i + 1
                 while j < chars.count, chars[j].isLetter || chars[j].isNumber || chars[j] == "_" { j += 1 }
@@ -257,245 +402,5 @@ enum SQLFormatter {
             i += 1
         }
         return nil
-    }
-
-    // MARK: - Formatting
-
-    private static let keywords: Set<String> = [
-        "SELECT", "FROM", "WHERE", "AND", "OR", "NOT", "IN", "EXISTS", "BETWEEN",
-        "LIKE", "ILIKE", "IS", "NULL", "AS", "ON", "USING", "JOIN", "INNER",
-        "LEFT", "RIGHT", "FULL", "OUTER", "CROSS", "LATERAL", "GROUP", "BY",
-        "ORDER", "HAVING", "LIMIT", "OFFSET", "UNION", "ALL", "EXCEPT",
-        "INTERSECT", "INSERT", "INTO", "VALUES", "UPDATE", "SET", "DELETE",
-        "RETURNING", "WITH", "RECURSIVE", "CREATE", "ALTER", "DROP", "TABLE",
-        "INDEX", "VIEW", "DISTINCT", "CASE", "WHEN", "THEN", "ELSE", "END",
-        "ASC", "DESC", "NULLS", "FIRST", "LAST", "TRUE", "FALSE", "DEFAULT",
-        "PRIMARY", "KEY", "FOREIGN", "REFERENCES", "UNIQUE", "CONSTRAINT",
-        "CONFLICT", "DO", "NOTHING", "CASCADE", "COALESCE", "CAST", "COUNT",
-        "SUM", "AVG", "MIN", "MAX", "IF", "ANY", "SOME", "EXPLAIN", "TRUNCATE",
-        "GRANT", "REVOKE", "MERGE", "BEGIN", "COMMIT", "ROLLBACK"
-    ]
-
-    /// Keywords that begin a new line at the current statement depth.
-    private static let clauseStarters: Set<String> = [
-        "SELECT", "FROM", "WHERE", "GROUP", "ORDER", "HAVING", "LIMIT",
-        "OFFSET", "VALUES", "SET", "RETURNING", "UNION", "EXCEPT", "INTERSECT",
-        "INSERT", "UPDATE", "DELETE", "JOIN", "INNER", "LEFT", "RIGHT", "FULL",
-        "CROSS", "ON"
-    ]
-
-    /// Clauses whose comma-separated lists get one item per line.
-    private static let listClauses: Set<String> = ["SELECT", "SET", "RETURNING", "GROUP", "ORDER"]
-
-    /// Keywords that read as function calls, so no space before `(`.
-    private static let functionKeywords: Set<String> = [
-        "COALESCE", "CAST", "COUNT", "SUM", "AVG", "MIN", "MAX", "IF"
-    ]
-
-    static func format(
-        _ sql: String,
-        indentation: IndentationStyle = .twoSpaces
-    ) -> String {
-        let tokens = tokenize(sql.trimmingCharacters(in: .whitespacesAndNewlines))
-        guard !tokens.isEmpty else { return sql }
-
-        let indent = indentation.indentString
-        var output = ""
-        var depth = 0
-        var currentClause: String?
-        var clauseDepth = 0
-        var previous: Token?
-
-        func newline(extraLevels: Int = 0) {
-            while output.hasSuffix(" ") { output.removeLast() }
-            output += "\n" + String(repeating: indent, count: depth + extraLevels)
-        }
-
-        func needsSpace(before token: Token) -> Bool {
-            guard let prev = previous, let last = output.last else { return false }
-            if last == "\n" || last == " " || last == "\t" || last == "(" { return false }
-            switch token.kind {
-            case .comma, .semicolon, .closeParen:
-                return false
-            case .openParen:
-                // No space in function calls / casts: word(  or  )(
-                if prev.kind == .word {
-                    let upper = prev.text.uppercased()
-                    if !keywords.contains(upper) || functionKeywords.contains(upper) { return false }
-                }
-                if prev.kind == .symbol && prev.text == "::" { return false }
-                return true
-            case .symbol where token.text == "::":
-                return false
-            default:
-                if prev.kind == .symbol && prev.text == "::" { return false }
-                return true
-            }
-        }
-
-        var index = 0
-        while index < tokens.count {
-            let token = tokens[index]
-            defer {
-                previous = token
-                index += 1
-            }
-
-            switch token.kind {
-            case .word:
-                let upper = token.text.uppercased()
-                let isKeyword = keywords.contains(upper)
-                let rendered = isKeyword ? upper : token.text
-
-                if isKeyword, clauseStarters.contains(upper), !output.isEmpty {
-                    // "GROUP BY" / "ORDER BY": only break on the leading word.
-                    let isSecondWordOfClause = (previous?.kind == .word)
-                        && ["GROUP", "ORDER", "DELETE", "INNER", "LEFT", "RIGHT", "FULL", "CROSS", "OUTER"]
-                            .contains(previous!.text.uppercased())
-                    if !isSecondWordOfClause {
-                        newline()
-                        currentClause = upper
-                        clauseDepth = depth
-                        output += rendered
-                        continue
-                    }
-                } else if isKeyword, upper == "AND" || upper == "OR", depth == clauseDepth, !output.isEmpty {
-                    newline(extraLevels: 1)
-                    output += rendered
-                    continue
-                }
-
-                if needsSpace(before: token) { output += " " }
-                if output.isEmpty || output.hasSuffix("\n") {
-                    currentClause = isKeyword ? upper : currentClause
-                    if isKeyword, clauseStarters.contains(upper) { clauseDepth = depth }
-                }
-                output += rendered
-
-            case .string:
-                if needsSpace(before: token) { output += " " }
-                output += formatStringLiteral(token.text, indentation: indentation, currentIndentLevel: depth + 1)
-
-            case .quotedIdentifier, .number:
-                if needsSpace(before: token) { output += " " }
-                output += token.text
-
-            case .lineComment:
-                if !output.isEmpty { newline() }
-                output += token.text
-
-            case .blockComment:
-                if needsSpace(before: token) { output += " " }
-                output += token.text
-
-            case .openParen:
-                if needsSpace(before: token) { output += " " }
-                output += "("
-                depth += 1
-
-            case .closeParen:
-                depth = max(0, depth - 1)
-                output += ")"
-
-            case .comma:
-                output += ","
-                if let clause = currentClause, listClauses.contains(clause), depth == clauseDepth {
-                    newline(extraLevels: 1)
-                } else {
-                    output += " "
-                }
-
-            case .semicolon:
-                while output.hasSuffix(" ") { output.removeLast() }
-                output += ";"
-                currentClause = nil
-
-            case .symbol:
-                if needsSpace(before: token) { output += " " }
-                output += token.text
-            }
-        }
-
-        return output.trimmingCharacters(in: .whitespacesAndNewlines)
-    }
-
-    /// Collapses a statement to a single line; embedded JSON is minified.
-    static func minify(_ sql: String) -> String {
-        let tokens = tokenize(sql.trimmingCharacters(in: .whitespacesAndNewlines))
-        var output = ""
-        var previous: Token?
-
-        for token in tokens {
-            if case .lineComment = token.kind { continue }
-
-            var text = token.text
-            if case .string = token.kind {
-                text = minifyStringLiteral(token.text)
-            }
-
-            if let prev = previous, !output.isEmpty {
-                let noSpaceBefore: Bool
-                switch token.kind {
-                case .comma, .semicolon, .closeParen:
-                    noSpaceBefore = true
-                case .openParen:
-                    let prevUpper = prev.text.uppercased()
-                    noSpaceBefore = (prev.kind == .word && (!keywords.contains(prevUpper) || functionKeywords.contains(prevUpper)))
-                        || (prev.kind == .symbol && prev.text == "::")
-                case .symbol where token.text == "::":
-                    noSpaceBefore = true
-                default:
-                    noSpaceBefore = prev.kind == .openParen || (prev.kind == .symbol && prev.text == "::")
-                }
-                if !noSpaceBefore { output += " " }
-            }
-            output += text
-            previous = token
-        }
-        return output
-    }
-
-    // MARK: - Embedded JSON
-
-    /// If a single-quoted literal contains a JSON object or array, pretty-print
-    /// it in place (multi-line, indented past the current line). Other
-    /// literals pass through untouched.
-    private static func formatStringLiteral(
-        _ literal: String,
-        indentation: IndentationStyle,
-        currentIndentLevel: Int
-    ) -> String {
-        guard let (content, rebuild) = unwrapSingleQuoted(literal) else { return literal }
-        guard let object = JSONFormatter.parseObjectOrArray(content),
-              let pretty = try? JSONFormatter.format(object, indentation: indentation) else {
-            return literal
-        }
-        let baseIndent = String(repeating: indentation.indentString, count: currentIndentLevel)
-        let indented = pretty
-            .split(separator: "\n", omittingEmptySubsequences: false)
-            .enumerated()
-            .map { $0.offset == 0 ? String($0.element) : baseIndent + String($0.element) }
-            .joined(separator: "\n")
-        return rebuild(indented)
-    }
-
-    private static func minifyStringLiteral(_ literal: String) -> String {
-        guard let (content, rebuild) = unwrapSingleQuoted(literal) else { return literal }
-        guard let object = JSONFormatter.parseObjectOrArray(content),
-              let minified = try? JSONFormatter.minify(object) else {
-            return literal
-        }
-        return rebuild(minified)
-    }
-
-    /// Returns the unescaped content of a plain `'...'` literal and a closure
-    /// that re-wraps (and re-escapes) replacement content the same way.
-    private static func unwrapSingleQuoted(_ literal: String) -> (String, (String) -> String)? {
-        guard literal.count >= 2, literal.hasPrefix("'"), literal.hasSuffix("'") else { return nil }
-        let inner = String(literal.dropFirst().dropLast())
-        let content = inner.replacingOccurrences(of: "''", with: "'")
-        return (content, { newContent in
-            "'" + newContent.replacingOccurrences(of: "'", with: "''") + "'"
-        })
     }
 }

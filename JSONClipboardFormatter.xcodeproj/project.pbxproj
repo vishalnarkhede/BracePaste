@@ -24,7 +24,9 @@
 		89E10004C4D2536D9A1FDB44 /* JSONExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CC564445365A2210024F397 /* JSONExtractorTests.swift */; };
 		90E56A5D4729D009AC219B75 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C0B5FDF4557385720D89F61 /* SettingsView.swift */; };
 		91DA09467F96E4B8C3A1420A /* PopupWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C8AA1FFAF0E50E0D79A807D /* PopupWindowController.swift */; };
+		9D446E192E57DA7D6644B171 /* JS in Resources */ = {isa = PBXBuildFile; fileRef = 75BE59310866BF0C20695E7B /* JS */; };
 		A137647A9D2F9D839A7237A3 /* JSONFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C0DF3DEEEC26A3D5A6A1008 /* JSONFormatter.swift */; };
+		A4617650ED8FC6E811A6161B /* ScriptEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = BED0C64213AEFA8752098E70 /* ScriptEngine.swift */; };
 		C22735EB0D5BEDB03395C45B /* GlobalShortcutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD42A033DE98CC5D66ED582 /* GlobalShortcutManager.swift */; };
 		CC8587E61D390A225C313571 /* PasteboardDoubleCopyMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1D670AD1287EE37FA1EA1 /* PasteboardDoubleCopyMonitor.swift */; };
 		CCFC0EB481186A408769E6D3 /* ShortcutRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7239085A81D18E7B3191107 /* ShortcutRecorderView.swift */; };
@@ -71,6 +73,7 @@
 		584B588337942AE2617FB098 /* BalancedJSONScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalancedJSONScanner.swift; sourceTree = "<group>"; };
 		5CC564445365A2210024F397 /* JSONExtractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONExtractorTests.swift; sourceTree = "<group>"; };
 		6CA1F3419F73B40E3209E510 /* JSONClipboardFormatter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JSONClipboardFormatter.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		75BE59310866BF0C20695E7B /* JS */ = {isa = PBXFileReference; lastKnownFileType = folder; name = JS; path = JSONClipboardFormatter/Resources/JS; sourceTree = SOURCE_ROOT; };
 		7C0B5FDF4557385720D89F61 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7CF41A41E432373F99F68940 /* FormattingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormattingService.swift; sourceTree = "<group>"; };
 		7DF883772F379AA6A3E838E7 /* ClipboardUndoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardUndoManager.swift; sourceTree = "<group>"; };
@@ -80,6 +83,7 @@
 		B441B13A01CB1D5C2E7FE77B /* JSONProcessingResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONProcessingResult.swift; sourceTree = "<group>"; };
 		B6C0673545D38CCFF379A502 /* JSONClipboardFormatter.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = JSONClipboardFormatter.entitlements; sourceTree = "<group>"; };
 		BB658FC3486DB52BB5396DF9 /* JSONClipboardFormatterUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONClipboardFormatterUITests.swift; sourceTree = "<group>"; };
+		BED0C64213AEFA8752098E70 /* ScriptEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScriptEngine.swift; sourceTree = "<group>"; };
 		BEED025693184B136CD6D54B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CC3B303931EEC40A87A313AB /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		D2205C60107FF63AB0C8281E /* SQLFormatterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLFormatterTests.swift; sourceTree = "<group>"; };
@@ -101,6 +105,14 @@
 				0CFCE4F39068BED1DDF010D9 /* JSONClipboardFormatterApp.swift */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		104B53E25B8D541967F6BDE3 /* Detection */ = {
+			isa = PBXGroup;
+			children = (
+				BED0C64213AEFA8752098E70 /* ScriptEngine.swift */,
+			);
+			path = Detection;
 			sourceTree = "<group>";
 		};
 		1B03759A28A85CCF651148E4 /* MenuBar */ = {
@@ -134,6 +146,7 @@
 				B6C0673545D38CCFF379A502 /* JSONClipboardFormatter.entitlements */,
 				0D0AA29A90076EA7BFC5242E /* App */,
 				401819A910916B82688B1B61 /* Clipboard */,
+				104B53E25B8D541967F6BDE3 /* Detection */,
 				A88A6C7FF658C845BBA8266B /* JSON */,
 				38C2FDF4E48E27451BAB793D /* Keyboard */,
 				1B03759A28A85CCF651148E4 /* MenuBar */,
@@ -181,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				BEED025693184B136CD6D54B /* Assets.xcassets */,
+				75BE59310866BF0C20695E7B /* JS */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -359,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				747C4A5E55B4E35863484D7E /* Assets.xcassets in Resources */,
+				9D446E192E57DA7D6644B171 /* JS in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,6 +407,7 @@
 				2EC7010867370D351A7BE062 /* PermissionManager.swift in Sources */,
 				91DA09467F96E4B8C3A1420A /* PopupWindowController.swift in Sources */,
 				16E67C5F5D0FDF0323B74A94 /* SQLFormatter.swift in Sources */,
+				A4617650ED8FC6E811A6161B /* ScriptEngine.swift in Sources */,
 				90E56A5D4729D009AC219B75 /* SettingsView.swift in Sources */,
 				CCFC0EB481186A408769E6D3 /* ShortcutRecorderView.swift in Sources */,
 			);
@@ -529,11 +545,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = JSONClipboardFormatter/JSONClipboardFormatter.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = JSONClipboardFormatter/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vishalnarkhede.BracePaste;
 				PRODUCT_MODULE_NAME = BracePaste;
 				PRODUCT_NAME = BracePaste;
@@ -547,11 +563,11 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = JSONClipboardFormatter/JSONClipboardFormatter.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = JSONClipboardFormatter/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vishalnarkhede.BracePaste;
 				PRODUCT_MODULE_NAME = BracePaste;
 				PRODUCT_NAME = BracePaste;

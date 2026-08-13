@@ -122,8 +122,17 @@ LIMIT 50;
 
 - Keywords uppercased, clauses on their own lines, `AND`/`OR` indented
 - JSON literals inside quoted strings are pretty-printed **in place** (escaping preserved)
-- Detection is conservative — an English sentence that happens to start with "Select" is left alone
+- Detection uses a real SQL grammar parser (not keyword matching) — English sentences and
+  source code that merely contain SQL keywords are left alone
 - **Minified** copies the statement back as a single line
+
+## Acknowledgements
+
+BracePaste bundles these open-source libraries (running locally in JavaScriptCore):
+
+- [sql-formatter](https://github.com/sql-formatter-org/sql-formatter) (MIT) — SQL layout
+- [node-sql-parser](https://github.com/taozhi8833998/node-sql-parser) (Apache-2.0/MIT) — SQL grammar validation
+- [highlight.js](https://github.com/highlightjs/highlight.js) (BSD-3-Clause) — language classification
 
 ## Features
 

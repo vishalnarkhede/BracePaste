@@ -80,15 +80,17 @@ enum JSONExtractor {
             )
         }
 
-        // 5. Structured content (SQL). A recognized SQL statement is formatted
-        // whole — including any embedded JSON literals — instead of being
-        // stripped down to the JSON by the balanced scan below.
-        if candidates.isEmpty, SQLFormatter.isLikelySQL(trimmed) {
-            let formatted = SQLFormatter.format(trimmed, indentation: indentation)
-            let minified = SQLFormatter.minify(trimmed)
+        // 5. Structured content (SQL). Whether text is SQL is decided by a
+        // real grammar parser (node-sql-parser via ScriptEngine), so prose
+        // and source code that merely contain SQL keywords are rejected.
+        // A recognized statement is formatted whole — including embedded
+        // JSON literals — instead of being stripped by the scan below.
+        if candidates.isEmpty,
+           SQLFormatter.isLikelySQL(trimmed),
+           let formatted = SQLFormatter.format(trimmed, indentation: indentation) {
             return .success(
                 formattedJSON: formatted,
-                minifiedJSON: minified,
+                minifiedJSON: SQLFormatter.minify(trimmed),
                 source: .sql,
                 candidateRange: nil,
                 originalInput: original
@@ -97,20 +99,36 @@ enum JSONExtractor {
 
         // 6. Balanced scan of surrounding text
         let scanned = BalancedJSONScanner.findCandidates(in: trimmed)
+        var surrounding: [ScoredCandidate] = []
         for candidate in scanned {
-            if let object = JSONFormatter.parseObjectOrArray(candidate.text) {
-                candidates.append(
-                    ScoredCandidate(
-                        text: candidate.text,
-                        range: candidate.range,
-                        source: .surroundingText,
-                        object: object,
-                        priority: 4,
-                        size: candidate.text.utf8.count
-                    )
+            guard let object = JSONFormatter.parseObjectOrArray(candidate.text),
+                  hasFormattableContent(object) else { continue }
+            surrounding.append(
+                ScoredCandidate(
+                    text: candidate.text,
+                    range: candidate.range,
+                    source: .surroundingText,
+                    object: object,
+                    priority: 4,
+                    size: candidate.text.utf8.count
                 )
-            }
+            )
         }
+
+        // When the clipboard is classified as source code (highlight.js) and
+        // the scan only found key-less fragments ("items[0]", "[]string"),
+        // stay quiet. Fragments with real object keys — log lines with JSON
+        // payloads — are still extracted.
+        if candidates.isEmpty,
+           !surrounding.isEmpty,
+           !surrounding.contains(where: { $0.text.contains(":") }),
+           let guess = ScriptEngine.shared.detectLanguage(trimmed),
+           let language = guess.language,
+           ScriptEngine.codeLanguages.contains(language),
+           guess.relevance >= 3 {
+            surrounding.removeAll()
+        }
+        candidates.append(contentsOf: surrounding)
 
         guard let best = selectBest(from: candidates) else {
             return .failure(
@@ -135,6 +153,23 @@ enum JSONExtractor {
                 originalInput: original
             )
         }
+    }
+
+    /// A fragment mined out of surrounding text is only popup-worthy when
+    /// there is something to format: an object with keys, or an array with
+    /// more than one element. Bare "[]", "{}", "[0]" carry no information.
+    private static func hasFormattableContent(_ object: Any) -> Bool {
+        if let dict = object as? [String: Any] {
+            return !dict.isEmpty
+        }
+        if let array = object as? [Any] {
+            if array.count >= 2 { return true }
+            if let first = array.first {
+                return hasFormattableContent(first)
+            }
+            return false
+        }
+        return false
     }
 
     // MARK: - Candidate selection
