@@ -25,14 +25,9 @@ final class PermissionManager: ObservableObject {
     }
 
     func openSystemSettings() {
-        let urls = [
-            "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility",
-            "x-apple.systempreferences:com.apple.preference.security?Privacy_ListenEvent"
-        ]
-        for urlString in urls {
-            if let url = URL(string: urlString) {
-                NSWorkspace.shared.open(url)
-            }
+        let urlString = "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility"
+        if let url = URL(string: urlString) {
+            NSWorkspace.shared.open(url)
         }
     }
 
