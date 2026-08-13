@@ -17,14 +17,15 @@ final class FormattedJSONViewModelTests: XCTestCase {
         canUndo: Bool = false,
         onCopy: @escaping (String) -> Void = { _ in },
         onUndo: @escaping () -> Void = {},
-        onFormatAgain: @escaping (String) async -> JSONProcessingResult? = { _ in nil }
+        onFormatAgain: @escaping (String) async -> JSONProcessingResult? = { _ in nil },
+        onClose: @escaping () -> Void = {}
     ) -> FormattedJSONViewModel {
         FormattedJSONViewModel(
             wrapLongLines: false,
             onCopy: onCopy,
             onUndo: onUndo,
             onFormatAgain: onFormatAgain,
-            onClose: {}
+            onClose: onClose
         )
     }
 
@@ -35,6 +36,35 @@ final class FormattedJSONViewModelTests: XCTestCase {
         vm.copyCurrent()
         XCTAssertEqual(copied, vm.editorText)
         XCTAssertEqual(vm.confirmationMessage, "Copied")
+    }
+
+    func testCopyClosesPopupAfterConfirmation() async {
+        var closed = false
+        let vm = makeViewModel(onClose: { closed = true })
+        vm.applySuccess(makeSuccess(), confirmation: nil, canUndo: false)
+        vm.copyCurrent()
+        XCTAssertFalse(closed)
+        try? await Task.sleep(nanoseconds: 800_000_000)
+        XCTAssertTrue(closed)
+    }
+
+    func testCopyMinifiedClosesPopupAfterConfirmation() async {
+        var closed = false
+        let vm = makeViewModel(onClose: { closed = true })
+        vm.applySuccess(makeSuccess(), confirmation: nil, canUndo: false)
+        vm.copyMinified()
+        try? await Task.sleep(nanoseconds: 800_000_000)
+        XCTAssertTrue(closed)
+    }
+
+    func testFailedMinifyDoesNotClose() async {
+        var closed = false
+        let vm = makeViewModel(onClose: { closed = true })
+        vm.editorText = "not json at all"
+        vm.copyMinified()
+        try? await Task.sleep(nanoseconds: 800_000_000)
+        XCTAssertFalse(closed)
+        XCTAssertNotNil(vm.errorMessage)
     }
 
     func testCopyMinified() {

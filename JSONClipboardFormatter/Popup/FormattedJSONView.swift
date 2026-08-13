@@ -154,6 +154,7 @@ final class FormattedJSONViewModel: ObservableObject {
         onCopy(editorText)
         setConfirmation("Copied")
         errorMessage = nil
+        closeAfterConfirmation()
     }
 
     func copyMinified() {
@@ -163,12 +164,23 @@ final class FormattedJSONViewModel: ObservableObject {
             onCopy(minified)
             setConfirmation("Minified JSON copied")
             errorMessage = nil
+            closeAfterConfirmation()
         } else if SQLFormatter.isLikelySQL(editorText) {
             onCopy(SQLFormatter.minify(editorText))
             setConfirmation("Single-line SQL copied")
             errorMessage = nil
+            closeAfterConfirmation()
         } else {
             errorMessage = "Editor contents are not valid JSON."
+        }
+    }
+
+    /// Copying is a terminal action: show the confirmation just long enough
+    /// to register, then dismiss the popup.
+    private func closeAfterConfirmation() {
+        Task {
+            try? await Task.sleep(nanoseconds: 450_000_000)
+            await MainActor.run { self.onClose() }
         }
     }
 
